@@ -151,10 +151,11 @@ window.onload = function(){
         }
     }
 
-    document.getElementById("btn_op_ln").onclick = function() {
+    document.getElementById("btn_op_volume").onclick = function() {
         if (!selectedOperation) {
             if (a !== '') {
-                a = Math.log(a)
+                a = 4/3*Math.PI*a*a*a
+                // a = a.toString().slice(0,9)
                 outputElement.innerHTML = a
             }
         }
@@ -206,7 +207,7 @@ window.onload = function(){
         a = expressionResult.toString()
         b = ''
         selectedOperation = null
-    
+        
         outputElement.innerHTML = a
     }
     };
