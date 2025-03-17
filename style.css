@@ -80,10 +80,10 @@ body{
     vertical-align: middle;
   }
 
-  #btns_calculator{
+  /* #btns_calculator{
     display: flex;
     align-items: flex-start;
-  }
+  } */
   #adv_btns{
     display: none;
     flex-direction: column;
@@ -91,10 +91,10 @@ body{
     left: -60px;
     top: 62px;
   }
-  #calculator {
+  /* #calculator {
     display: grid;
     grid-template-rows: repeat(5, 55px);
-  }
+  } */
   
   /* селектор для кнопки расчета выражения (=) */
   .my-btn.execute {

@@ -4,6 +4,7 @@ window.onload = function(){
     let b = ''
     let expressionResult = ''
     let selectedOperation = null
+    let accum = ''
     
     // окно вывода результата
     outputElement = document.getElementById("result")
@@ -170,24 +171,35 @@ window.onload = function(){
     }
     // кнопка расчёта результата
     document.getElementById("btn_op_equal").onclick = function() { 
-        if (a === '' || b === '' || !selectedOperation)
+        if (selectedOperation == null && b == '' && accum != '') {
+            expressionResult = +a + +accum
+            a = expressionResult
+            outputElement.innerHTML = a
+            return;
+        }
+        if (a === '' || b === '' || !selectedOperation )
             return
             
         switch(selectedOperation) { 
             case 'x':
                 expressionResult = (+a) * (+b)
+                accum = '';
                 break;
             case '+':
                 expressionResult = (+a) + (+b)
+                accum = '+' + b;
                 break;
             case '-':
                 expressionResult = (+a) - (+b)
+                accum = '-' + b;
                 break;
             case '/':
                 expressionResult = (+a) / (+b)
+                accum = '';
                 break;
             case '%':
                 expressionResult = (+a) / 100 * (+b)
+                accum = '';
                 break;    
         }
         
