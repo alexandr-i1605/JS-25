@@ -28,15 +28,14 @@ body{
     margin-top: 5px;             /* задаем отступ от кнопки сверху*/
     width: 50px;                 /* задаем ширину кнопки */
     height: 50px;                /* задаем высоту кнопки */
-    border-radius: .4rem;          /* округляем кнопку */
+    vertical-align: top;         /* выравнивание */
+    border-radius: .4rem;        /* округляем кнопку */
     border: none;                /* отключаем обводку */
-    background: #ffffff;         /* задаем серый цвет кнопки */
-    color: rgb(0, 0, 0);
-                    /* задаем белый цвет текста внутри кнопки */
+    background: #ffffff;       /* задаем серый цвет кнопки */
+    color: rgb(0, 0, 0);            
     box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
     transition: all .6s;          
     font-size: 1.5rem;           /* увеличим размер шрифта */
-    /*font-family:  'Cera Pro', sans-serif; /* сменим шрифт */
     cursor: pointer;             /* при наведении на кнопку курсор будет изменен
                                     со стрелки на 'указательный палец' */
     user-select: none;           /* отключаем возможность выделить текст внутри кнопки */
@@ -51,19 +50,36 @@ body{
   
   /* селектор для кнопок первостепенных операций */
   .my-btn.primary { 
-    background: #e4002b; /* цвет кнопки оранжевый */  
-    color:#ffffff;
+    background: #e4002b; /* цвет кнопки сервый */
+    color: #ffffff
+  }
+
+  /* селектор для кнопки очистки */
+  .my-btn.clear { 
+    background: #e0e0e0; /* цвет кнопки сервый */
+    color: #000000
   }
 
   /* селектор для кнопок второстепенных операций */
   .my-btn.secondary { 
-    background: rgb(0, 0, 0); /* цвет кнопки сервый */
-    color: #ffffff
+    background: #e0e0e0; /* цвет кнопки сервый */
+    color: #000000
   }
-  
+
+  /* селектор для кнопки доп операций */
+  .my-btn.advanced { 
+    background: #ffffff;
+    color: #000000;
+    padding: 9px;
+  }
+  .btn.advanced img{
+    vertical-align: middle;
+  }
+
   /* селектор для кнопки расчета выражения (=) */
-  .my-btn.execute { 
-    width: 110px;          /* сделаем кнопку шире других */
+  .my-btn.execute {
+    background: #e4002b;
+    color:#ffffff;
     border-radius: .4rem;   /* подкорректируем округлость */
   }
   
@@ -71,12 +87,12 @@ body{
   .result { 
     width: 220px;
     height: 50px;
-    margin-bottom: 10px;         /* отступ снизу */
-    padding-right: 10px;         /* выступ справа */
-    background: #f2f0ef; /* цвет можно задавать и таким образом */
-    text-align: right;           /* примагнитим текст к правой стороне */
-    color: #000000;            /* цвет текста белый */
-                
+    margin-bottom: 10px;            /* отступ снизу */
+    padding-right: 10px;            /* выступ справа */
+    background: #FFFFFF;          /* цвет можно задавать и таким образом */
+    border: 1.5px solid #e0e0e0;
+    text-align: right;              /* примагнитим текст к правой стороне */
+    color: #000000;       
     font-size: 3rem;
     font-family:  'Cera Pro' ,sans-serif;
     border-radius: .4rem; 
