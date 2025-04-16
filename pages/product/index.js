@@ -1,4 +1,3 @@
-import {ProductComponent} from "../../components/product/index.js";
 import {MainPage} from "../main/index.js";
 
 export class ProductPage {

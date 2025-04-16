@@ -63,17 +63,6 @@ export class MainPage {
     }
 
     addCard() {
-        // if (this.cards.length === 0) return;
-        
-        // const newId = this.cards.length > 0 
-        //     ? Math.max(...this.cards.map(c => c.id)) + 1 
-        //     : 1;
-        
-        // const newCard = {
-        //     ...this.cards[0],
-        //     id: newId,
-        //     text: this.cards.find(card => card.id === 1).text
-        // };
         let newCard = {...this.cards[0]}
         newCard.id=this.cards.length+1
         this.cards.push(newCard)
