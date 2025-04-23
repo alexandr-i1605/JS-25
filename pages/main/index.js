@@ -50,19 +50,25 @@ export class MainPage {
                 id: 1,  
                 src: "https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd",
                 title: "ЛанчБаскет 5 за 400",
-                text: "Реально за 400Р"
+                text: "400"
             },
             {
                 id: 2,
                 src: "https://s82079.cdn.ngenix.net/330x0/np4ztd9gx1kmncjxs7ehd7wh9ldm",
                 title: "Баскет L 24",
-                text: "А было 30"
+                text: "1551"
             },
             {
                 id: 3,
                 src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
                 title: "Чизбургер",
-                text: "Легенда"
+                text: "Шалаш"
+            },
+            {
+                id: 4,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "Taco-cat",
+                text: "200"
             }
         ];
     }
