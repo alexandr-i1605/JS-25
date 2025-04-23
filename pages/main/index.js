@@ -16,7 +16,12 @@ export class MainPage {
     getHTML() {
         return `
             <header class="d-flex justify-content-between align-items-center mb-2 bg-light rounded">
-                <button class="btn btn-primary" id="home-btn">Домой</button>
+                <button class="btn btn-primary" id="home-btn"style="border-radius: .4rem;
+                        background: #e4002b;
+                        color:#ffffff;
+                        border: none;
+                        font-size: 16px;
+                        font-weight: 700;">Домой</button>
             </header>
             <div class="d-flex mb-3">
                 <button class="btn btn-success me-2" id="add-card-btn"style="border-radius: .4rem;

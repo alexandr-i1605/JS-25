@@ -23,7 +23,12 @@ export class ProductPage {
     getHTML() {
         return `
         <header class="d-flex justify-content-between align-items-center bg-light rounded">
-            <button class="btn btn-primary" id="home-btn">Домой</button>
+            <button class="btn btn-primary" id="home-btn" style="border-radius: .4rem;
+                        background: #e4002b;
+                        color:#ffffff;
+                        border: none;
+                        font-size: 16px;
+                        font-weight: 700;">Домой</button>
             <h2 class="mb-0">${this.cardData.title}</h2>
             <div></div>
         </header>
