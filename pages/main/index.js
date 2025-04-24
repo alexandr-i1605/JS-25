@@ -54,22 +54,22 @@ export class MainPage {
                 <div class="input-group me-3" style="width: 250px;">
                     <div class="input-group-prepend">
                         <div class="input-group-text p-0 border-0 bg-transparent">
-                            <input class="form-check-input mt-0" type="radio" name="Radios" id="Splitter" value="option4" 
+                            <input class="form-check-input mt-0" type="radio" name="Radios" id="Splitter" 
                             style="margin-left: 10px; margin-right: 5px;">
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Разделитель" 
+                    <input type="text" id="SplitterInput" class="form-control" placeholder="Разделитель" 
                     style="border-radius: 0 .4rem .4rem 0;">
                 </div>
 
                 <div class="input-group" style="width: 250px;">
                     <div class="input-group-prepend">
                         <div class="input-group-text p-0 border-0 bg-transparent">
-                            <input class="form-check-input mt-0" type="radio" name="Radios" id="Coupl" value="option5" 
+                            <input class="form-check-input mt-0" type="radio" name="Radios" id="Coupl"
                             style="margin-left: 10px; margin-right: 5px;">
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Найти пару" 
+                    <input type="text" id="CouplInput" class="form-control" placeholder="Найти пару" 
                     style="border-radius: 0 .4rem .4rem 0;">
                 </div>
             </div>
@@ -122,7 +122,49 @@ export class MainPage {
                 src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
                 title: "TacoCat",
                 text: "200"
-            }
+            },
+            {
+                id: 5,
+                src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
+                title: "undefined",
+                text: "200"
+            },
+            {
+                id: 6,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "TacoCat",
+                text: "null"
+            },
+            {
+                id: 7,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "TacoCat",
+                text: "0"
+            },
+            {
+                id: 8,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "TacoCat",
+                text: "false"
+            },
+            {
+                id: 9,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "TacoCat",
+                text: "1"
+            },
+            {
+                id: 10,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "TacoCat",
+                text: "2"
+            },
+            {
+                id: 11,
+                src: "https://s82079.cdn.ngenix.net/330x0/7m7ja14p9nuufnl2hz2c5ts65252",
+                title: "TacoCat",
+                text: "3"
+            },
         ];
     }
 
@@ -141,11 +183,11 @@ export class MainPage {
         this.renderCards();
     }
 
-    renderCards() {
+    renderCards(cards = this.cards) {
         const container = this.pageRoot;
         container.innerHTML = '';
         
-        this.cards.forEach((item) => {
+        cards.forEach((item) => {
             const productCard = new ProductCardComponent(container);
             productCard.render(
                 item, 
@@ -154,7 +196,106 @@ export class MainPage {
             );
         });
     }
-        
+
+    // Напишите функцию erase, которая очищает массив от нежелательных значений, таких как false,
+    //  undefined, пустые строки, ноль, null.
+    erase() {
+        return this.cards.filter(card => {
+            return card.title !== 'undefined' && 
+                   card.title !== 'null' && 
+                   card.text !== 'undefined' && 
+                   card.text !== 'null' && 
+                   card.title !== 'false' && 
+                   card.text !== 'false' &&
+                   card.title !== 'true' && 
+                   card.text !== 'true' &&
+                   card.title !== '' && 
+                   card.text !== '' &&
+                   card.title !== '0' && 
+                   card.text !== '0';
+                   
+        });
+    }
+
+    // Проверить что строка является палиндромом. Палиндромом называется строка,
+    // которая пишется одинаково слева направо и справа налево.
+    isPalindrome(str) {
+        const cleanStr = str.toLowerCase().replace(' ', '');
+        let left = 0;
+        let right = cleanStr.length - 1;
+    
+        while (left < right) {
+            if (cleanStr[left] !== cleanStr[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    // Второе решение
+    // isPalindrome(str) {
+    //     const cleanStr = str.toLowerCase().replace(' ', '');
+    //     return cleanStr === cleanStr.split('').reverse().join('');
+    // }
+
+    getPalindroms(){
+        return this.cards.filter(card => {
+            const title = this.isPalindrome(card.title);
+            const text = this.isPalindrome(card.text);
+            return title || text;
+        });
+    }
+
+    concatenate(separator) {
+        const allTitles = this.cards.map(card => card.title)
+        const allTexts = this.cards.map(card => card.text)
+
+        const combinedTitle = allTitles.join(separator)
+        const combinedText = allTexts.join(separator)
+
+        const Card = {
+          id: this.cards.length+1,
+          src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
+          title: combinedTitle,
+          text: combinedText,
+          flag: true
+        };
+      
+        return Card;
+    }
+      
+    findCouple(number) {
+        const allTexts = this.cards.map(card => card.text);
+        const AllNum = new Set();
+        for (const num of allTexts) {
+            if (!isNaN(num)){
+                AllNum.add(Number(num))
+            }
+        }
+        const pairs = [];
+        for (const num of AllNum) {
+            const complement =number - num;
+            console.log(complement, num)
+            if (AllNum.has(complement)) {
+                pairs.push(`${complement}+${num}`);
+                AllNum.delete(complement);
+            } else {
+                AllNum.add(num);
+            }
+        }
+        const resultString = pairs.join(', ');
+        const newCard = {
+            id: this.cards.length + 1,
+            src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
+            title: 'Couples',
+            text: resultString,
+            flag: true
+        };
+        return newCard;
+    }
+
     render() {
         this.parent.innerHTML = '';
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
@@ -164,6 +305,36 @@ export class MainPage {
         document.getElementById('add-card-btn').addEventListener('click', () => this.addCard());
         document.getElementById('home-btn').addEventListener('click', () => {
             this.render();
+        });
+
+        document.getElementById('AllCards').addEventListener('change', () => {
+            this.renderCards();
+        });
+        
+        document.getElementById('CleanCards').addEventListener('change', () => {
+            const filteredCards = this.erase();
+            this.renderCards(filteredCards);
+        });
+
+        document.getElementById('Palindroms').addEventListener('change', () => {
+            const filteredCards = this.getPalindroms();
+            this.renderCards(filteredCards);
+        });
+
+        document.getElementById('Splitter').addEventListener('change', () => {
+            const separator =  document.getElementById('SplitterInput').value;
+            const combinedCard = this.concatenate(separator);
+            const filteredCards = this.cards.filter(c => c.flag);
+            filteredCards.push(combinedCard);
+            this.renderCards(filteredCards);
+        });
+    
+        document.getElementById('Coupl').addEventListener('change', () => {
+            const number =  document.getElementById('CouplInput').value;
+            const combinedCard = this.findCouple(number);
+            const filteredCards = this.cards.filter(c => c.flag);
+            filteredCards.push(combinedCard);
+            this.renderCards(filteredCards);
         });
     }
 }
