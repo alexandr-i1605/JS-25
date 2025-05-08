@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/alexandr-i1605/JS-25#readme",
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.5"
   }
 }
