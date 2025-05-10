@@ -36,7 +36,7 @@ export class MainPage {
         `;
     }
 
-    clickCard(e) {    
+    clickCard(e) {
         const cardId = parseInt(e.target.dataset.id);
         const productPage = new ProductPage(this.parent, cardId);
         productPage.render();
@@ -74,7 +74,7 @@ export class MainPage {
     renderData(items) {
         items.forEach((item) => {
             const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item, this.clickCard.bind(this))
+            productCard.render(item, this.clickCard.bind(this), this.removeCard.bind())
         })
     }
 
@@ -87,25 +87,14 @@ export class MainPage {
     //     this.renderCards();
     // }
 
-    // removeCard(cardId) {
-    //     this.cards = this.cards.filter(card => card.id !== cardId);
-    //     MainPage.cards = this.cards;
-    //     this.renderCards();
-    // }
+    removeCard(e) {
+        debugger
+        const cardId = parseInt(e.target.dataset.id);
+        ajax.delete(stockUrls.getStockById(cardId), (data) => {
+            this.renderData(data);
+        })
+    }
 
-    // renderCards() {
-    //     const container = this.pageRoot;
-    //     container.innerHTML = '';
-        
-    //     this.cards.forEach((item) => {
-    //         const productCard = new ProductCardComponent(container);
-    //         productCard.render(
-    //             item, 
-    //             (e) => this.clickCard(e),
-    //             () => this.removeCard(item.id)
-    //         );
-    //     });
-    // }
     clickBack() {
         const mainPage = new MainPage(this.parent)
         mainPage.render()

@@ -35,6 +35,7 @@ export class ProductCardComponent {
                     justify-content: space-between;">
                     <button class="btn btn-danger" 
                         id="remove-card-${data.id}"
+                        data-id="${data.id}"
                         style="border-radius: .4rem;
                             border: none;
                             background: #ffffff;
