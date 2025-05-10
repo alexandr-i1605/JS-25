@@ -74,7 +74,7 @@ export class MainPage {
     renderData(items) {
         items.forEach((item) => {
             const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item, this.clickCard.bind(this), this.removeCard.bind())
+            productCard.render(item, this.clickCard.bind(this), this.removeCard.bind(this))
         })
     }
 
@@ -88,10 +88,9 @@ export class MainPage {
     // }
 
     removeCard(e) {
-        debugger
         const cardId = parseInt(e.target.dataset.id);
         ajax.delete(stockUrls.getStockById(cardId), (data) => {
-            this.renderData(data);
+            this.render();
         })
     }
 
