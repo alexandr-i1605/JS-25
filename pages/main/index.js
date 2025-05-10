@@ -1,27 +1,26 @@
 import {ProductCardComponent} from "../../components/product-card/index.js";
+import {BackButtonComponent} from "../../components/back-button/index.js";
 import {ProductPage} from "../product/index.js";
+import {ajax} from "../../modules/ajax.js";
+import {stockUrls} from "../../modules/stockUrls.js";
 
 export class MainPage {
-    static cards = [];
 
     constructor(parent) {
         this.parent = parent;
-        this.cards = MainPage.cards.length ? MainPage.cards : this.getData();
-        MainPage.cards = this.cards;
     } 
     get pageRoot() {
         return document.getElementById('main-page')
     }
 
+    get backBtn(){
+        return document.getElementById("backButton")
+    }
+
     getHTML() {
         return `
             <header class="d-flex justify-content-between align-items-center mb-2 bg-light rounded">
-                <button class="btn btn-primary" id="home-btn"style="border-radius: .4rem;
-                        background: #e4002b;
-                        color:#ffffff;
-                        border: none;
-                        font-size: 16px;
-                        font-weight: 700;">Домой</button>
+                <div id="backButton" </div>
             </header>
             <div class="d-flex mb-3">
                 <button class="btn btn-success me-2" id="add-card-btn"style="border-radius: .4rem;
@@ -37,74 +36,92 @@ export class MainPage {
         `;
     }
 
-    clickCard(e) {
+    clickCard(e) {    
         const cardId = parseInt(e.target.dataset.id);
-        const cardData = this.cards.find(card => card.id === cardId);
-        const productPage = new ProductPage(this.parent, cardId, cardData);
+        const productPage = new ProductPage(this.parent, cardId);
         productPage.render();
     }
 
+    // getData() {
+    //     return [
+    //         {
+    //             id: 1,  
+    //             src: "https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd",
+    //             title: "ЛанчБаскет 5 за 400",
+    //             text: "Реально за 400Р"
+    //         },
+    //         {
+    //             id: 2,
+    //             src: "https://s82079.cdn.ngenix.net/330x0/np4ztd9gx1kmncjxs7ehd7wh9ldm",
+    //             title: "Баскет L 24",
+    //             text: "А было 30"
+    //         },
+    //         {
+    //             id: 3,
+    //             src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
+    //             title: "Чизбургер",
+    //             text: "Легенда"
+    //         }
+    //     ];
+    // }
+
     getData() {
-        return [
-            {
-                id: 1,  
-                src: "https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd",
-                title: "ЛанчБаскет 5 за 400",
-                text: "Реально за 400Р"
-            },
-            {
-                id: 2,
-                src: "https://s82079.cdn.ngenix.net/330x0/np4ztd9gx1kmncjxs7ehd7wh9ldm",
-                title: "Баскет L 24",
-                text: "А было 30"
-            },
-            {
-                id: 3,
-                src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
-                title: "Чизбургер",
-                text: "Легенда"
-            }
-        ];
+        ajax.get(stockUrls.getStocks(), (data) => {
+            this.renderData(data);
+        })
     }
 
-    addCard() {
-        let newCard = {...this.cards[0]}
-        newCard.id=this.cards.length+1
-        this.cards.push(newCard)
-        console.log(this.cards)
-        MainPage.cards = this.cards;
-        this.renderCards();
+    renderData(items) {
+        items.forEach((item) => {
+            const productCard = new ProductCardComponent(this.pageRoot)
+            productCard.render(item, this.clickCard.bind(this))
+        })
     }
 
-    removeCard(cardId) {
-        this.cards = this.cards.filter(card => card.id !== cardId);
-        MainPage.cards = this.cards;
-        this.renderCards();
-    }
+    // addCard() {
+    //     let newCard = {...this.cards[0]}
+    //     newCard.id=this.cards.length+1
+    //     this.cards.push(newCard)
+    //     console.log(this.cards)
+    //     MainPage.cards = this.cards;
+    //     this.renderCards();
+    // }
 
-    renderCards() {
-        const container = this.pageRoot;
-        container.innerHTML = '';
+    // removeCard(cardId) {
+    //     this.cards = this.cards.filter(card => card.id !== cardId);
+    //     MainPage.cards = this.cards;
+    //     this.renderCards();
+    // }
+
+    // renderCards() {
+    //     const container = this.pageRoot;
+    //     container.innerHTML = '';
         
-        this.cards.forEach((item) => {
-            const productCard = new ProductCardComponent(container);
-            productCard.render(
-                item, 
-                (e) => this.clickCard(e),
-                () => this.removeCard(item.id)
-            );
-        });
+    //     this.cards.forEach((item) => {
+    //         const productCard = new ProductCardComponent(container);
+    //         productCard.render(
+    //             item, 
+    //             (e) => this.clickCard(e),
+    //             () => this.removeCard(item.id)
+    //         );
+    //     });
+    // }
+    clickBack() {
+        const mainPage = new MainPage(this.parent)
+        mainPage.render()
     }
-        
+
     render() {
-        this.parent.innerHTML = '';
-        this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+        this.parent.innerHTML = ''
+        const html = this.getHTML()
+        this.parent.insertAdjacentHTML('beforeend', html)
+
+        const backButton = new BackButtonComponent(this.backBtn)
+        backButton.render(this.clickBack.bind(this))
         
-        this.renderCards();
-        
+        this.getData()
+
         document.getElementById('add-card-btn').addEventListener('click', () => this.addCard());
-        document.getElementById('home-btn').addEventListener('click', () => {
-            this.render();
-        });
+        
     }
 }

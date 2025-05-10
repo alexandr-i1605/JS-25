@@ -1,6 +1,7 @@
 export class ProductCardComponent {
-    constructor(parent) {
+    constructor(parent, btnsFlag = true) {
         this.parent = parent;
+        this.btnsFlag = btnsFlag ? "flex":"none" //флаг для отображения кнопок на карточке
     }
 
     getHTML(data) {
@@ -30,9 +31,8 @@ export class ProductCardComponent {
                     <p class="card-text">${data.text}</p>
                 </div>
                 <div class="mt-auto" style="
-                    display: flex;
-                    justify-content: space-between;
-                ">
+                    display: ${this.btnsFlag};
+                    justify-content: space-between;">
                     <button class="btn btn-danger" 
                         id="remove-card-${data.id}"
                         style="border-radius: .4rem;

@@ -1,74 +1,60 @@
-import {MainPage} from "../main/index.js";
+import { ajax } from "../../modules/ajax.js";
+import { stockUrls } from "../../modules/stockUrls.js";
+import { MainPage } from "../main/index.js";
+import {ProductCardComponent} from "../../components/product-card/index.js";
+import {BackButtonComponent} from "../../components/back-button/index.js";
 
 export class ProductPage {
-    constructor(parent, id, cardData) {
+    constructor(parent, id) {
         this.parent = parent
         this.id = id
-        this.cardData = cardData
+        this.cardData = null
     }
 
     getData() {
-        return {
-            id: 1,
-            src: this.cardData.src,
-            title: this.cardData.title,
-            text: this.cardData.text
-        }
+        ajax.get(stockUrls.getStockById(this.id), (data) => {
+            this.cardData = data;
+            this.renderData(this.cardData)
+        })
+    }
+    
+    renderData(item) {
+        const product = new ProductCardComponent(this.pageRoot, false)
+        product.render(item)
     }
 
     get pageRoot() {
         return document.getElementById('product-page')
     }
 
+    get backBtn(){
+        return document.getElementById("backButton")
+    }
+
     getHTML() {
         return `
         <header class="d-flex justify-content-between align-items-center bg-light rounded">
-            <button class="btn btn-primary" id="home-btn" style="border-radius: .4rem;
-                        background: #e4002b;
-                        color:#ffffff;
-                        border: none;
-                        font-size: 16px;
-                        font-weight: 700;">Домой</button>
-            <h2 class="mb-0">${this.cardData.title}</h2>
+            <div id="backButton" </div>
+            <h2 class="mb-0"></h2>
             <div></div>
         </header>
-        <div class="d-flex justify-content-center">
-            ${this.getCardHTML(this.cardData)}
-        </div>
+        <div id="product-page" class="d-flex justify-content-center"></div>
     `;
     }
 
-    getCardHTML(cardData) {
-        return `
-        <div class="card" style="
-            width: 300px;
-            margin: 2rem;
-            border-radius: .4rem;
-            border: none;
-            background: #ffffff;
-            color: rgb(0, 0, 0);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
-        ">
-            <img class="card-img-top" 
-                 src="${cardData.src}" 
-                 alt="картинка"
-                 style="border-radius: .4rem .4rem 0 0; height: 250px; object-fit: contain;">
-            <div class="card-body">
-                <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
-                    <h5 class="card-title">${cardData.title}</h5>
-                    <p class="card-text">${cardData.text}</p>
-                </div>
-            </div>
-        </div>
-        `;
+    clickBack() {
+        const mainPage = new MainPage(this.parent);
+        mainPage.render();
     }
-    
+
     render() {
-        this.parent.innerHTML = this.getHTML();
-        
-        document.getElementById('home-btn').addEventListener('click', () => {
-            const mainPage = new MainPage(this.parent);
-            mainPage.render();
-        });
+        this.parent.innerHTML = '';
+        const html = this.getHTML();
+        this.parent.insertAdjacentHTML('beforeend', html);
+            
+        const backButton = new BackButtonComponent(this.backBtn)
+        backButton.render(this.clickBack.bind(this))
+
+        this.getData()
     }
 }
