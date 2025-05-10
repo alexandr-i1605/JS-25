@@ -23,6 +23,11 @@ export class StocksController {
     return this.stocksService.findOne(+id);
   }
 
+  @Get('less-than/:id_lt')
+  noMore(@Param('id_lt') id_lt: string) {
+    return this.stocksService.lessT(+id_lt);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStockDto: UpdateStockDto) {
     return this.stocksService.update(+id, updateStockDto);

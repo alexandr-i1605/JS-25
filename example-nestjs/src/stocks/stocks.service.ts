@@ -40,6 +40,11 @@ export class StocksService {
     this.fileService.write(updatedStocks);
   }
 
+  lessT(id: number): Stock[] {
+    const stocks = this.fileService.read();
+    return stocks.filter((stock) => stock.id < id);
+  }
+
   remove(id: number): void {
     const filteredStocks = this.fileService
       .read()
