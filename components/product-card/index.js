@@ -12,7 +12,7 @@ export class ProductCardComponent {
             margin: 1rem 0 1.5rem 1.5rem;
             border-radius: .4rem;
             border: none;
-            cursor: pointer;
+            cursor: default;
             background: #ffffff;
             color: rgb(0, 0, 0);
             box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
@@ -20,11 +20,27 @@ export class ProductCardComponent {
             display: flex;
             flex-direction: column;
         ">
+            <div class="dropdown" style="
+                display: flex;
+                flex-direction: row-reverse ;
+            ">
+                <button class="btn btn-floating btn-sm" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false" style="
+                        font-size: 16px;
+                        font-weight: 900">
+                     ⋮
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1">
+                    <li><button class="dropdown-item" id="edit-card-${data.id}"
+                        data-id="${data.id}" type="button">Редактировать</button></li>
+                </ul>
+            </div>
             <img class="card-img-top" style="
-            object-fit: contain;
-            height: 100%;
-            object-fit: contain;
-            width: 100%;" src="${data.src}" alt="картинка" style="border-radius: .4rem .4rem 0 0;">
+                object-fit: contain;
+                height: 100%;
+                object-fit: contain;
+                border-radius: .4rem .4rem 0 0;
+            width: 100%;" src="${data.src}" alt="картинка">
             <div class="card-body">
                  <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
                     <h5 class="card-title">${data.title}</h5>
@@ -48,11 +64,11 @@ export class ProductCardComponent {
                         id="click-card-${data.id}" 
                         data-id="${data.id}"
                         style="border-radius: .4rem;
-                        background: #e4002b;
-                        color:#ffffff;
-                        border: none;
-                        font-size: 16px;
-                        font-weight: 700;">
+                            background: #e4002b;
+                            color:#ffffff;
+                            border: none;
+                            font-size: 16px;
+                            font-weight: 700;">
                         Подробнее
                     </button>
                 </div>
