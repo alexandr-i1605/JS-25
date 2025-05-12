@@ -5,17 +5,21 @@ import {BackButtonComponent} from "../../components/back-button/index.js";
 import {EditorCardComponent} from "../../components/editor-card/index.js"
 
 export class EditorPage {
-    constructor(parent, id) {
+    constructor(parent, id=null) {
         this.parent = parent
         this.id = id
         this.cardData = null
     }
 
     getData() {
+        if(this.id){
         ajax.get(stockUrls.getStockById(this.id), (data) => {
             this.cardData = data;
             this.renderData(this.cardData)
-        })
+        })}
+        else{
+            this.renderData(this.cardData)
+        }
     }
 
     renderData(item) {
@@ -68,6 +72,21 @@ export class EditorPage {
         })
     }
 
+    get getFormData(){
+        return{
+            src: "https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd",
+            title: document.getElementById(`card-title-null`).value,
+            text: document.getElementById(`card-text-null`).value
+        }
+    }
+
+    addData(){
+        ajax.post(stockUrls.createStock(), (this.getFormData), (data) => {
+            this.cardData=data;
+            this.render();
+        })
+    }
+
     render() {
         this.parent.innerHTML = '';
         const html = this.getHTML();
@@ -75,8 +94,7 @@ export class EditorPage {
             
         const backButton = new BackButtonComponent(this.backBtn)
         backButton.render(this.clickBack.bind(this))
-
-        document.getElementById('save-card-btn').addEventListener('click', () => this.saveData());
+        document.getElementById('save-card-btn').addEventListener('click', () => (this.id?this.saveData():this.addData()));
 
         this.getData()
     }

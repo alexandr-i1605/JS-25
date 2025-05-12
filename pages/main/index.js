@@ -43,29 +43,6 @@ export class MainPage {
         productPage.render();
     }
 
-    // getData() {
-    //     return [
-    //         {
-    //             id: 1,  
-    //             src: "https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd",
-    //             title: "ЛанчБаскет 5 за 400",
-    //             text: "Реально за 400Р"
-    //         },
-    //         {
-    //             id: 2,
-    //             src: "https://s82079.cdn.ngenix.net/330x0/np4ztd9gx1kmncjxs7ehd7wh9ldm",
-    //             title: "Баскет L 24",
-    //             text: "А было 30"
-    //         },
-    //         {
-    //             id: 3,
-    //             src: "https://s82079.cdn.ngenix.net/330x0/9w5b3rhssyyzo8fnhds14cjrqezt",
-    //             title: "Чизбургер",
-    //             text: "Легенда"
-    //         }
-    //     ];
-    // }
-
     getData() {
         ajax.get(stockUrls.getStocks(), (data) => {
             this.renderData(data);
@@ -77,6 +54,11 @@ export class MainPage {
             const productCard = new ProductCardComponent(this.pageRoot)
             productCard.render(item, this.clickCard.bind(this), this.removeCard.bind(this), this.editCard.bind(this))
         })
+    }
+
+    addCard(){
+        const editorPage = new EditorPage(this.parent);
+        editorPage.render();
     }
 
     editCard(e) {

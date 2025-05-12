@@ -38,16 +38,18 @@ export class EditorCardComponent {
                 object-fit: contain;
                 border-radius: .4rem .4rem 0 0;
                 max-width: 100%;" 
-            src="${data.src}" alt="картинка">
+            src="${data?data.src:"https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd"}" alt="картинка">
             <div class="card-body">
                 <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
-                    <input type="text" maxlength="20" class="h5" id="card-title-${data.id}" value="${data.title}" style="
+                    <input type="text" maxlength="20" class="h5" 
+                    id="card-title-${data?data.id:"null"}" placeholder="Заголовок" value="${data?data.title:""}" style="
                         text-align: center;
                         width: 100%
 
 
                     "><br> 
-                    <input type="text" maxlength="34" class="p" id="card-text-${data.id}" value="${data.text}" style="
+                    <input type="text" maxlength="34" class="p"
+                    id="card-text-${data?data.id:"null"}" placeholder="Описание" value="${data?data.text:""}" style="
                         text-align: center;
                         font-size: 13px;
                         font-weight: 500;
@@ -59,8 +61,6 @@ export class EditorCardComponent {
                     display: flex;
                     justify-content: space-between;">
                     <button class="btn btn-danger disabled" 
-                        id="remove-card-${data.id}"
-                        data-id="${data.id}"
                         style="border-radius: .4rem;
                             border: none;
                             background: #ffffff;
@@ -70,8 +70,6 @@ export class EditorCardComponent {
                         <i class="bi bi-trash"></i> Удалить
                     </button>
                     <button class="btn btn-primary disabled" 
-                        id="click-card-${data.id}" 
-                        data-id="${data.id}"
                         style="border-radius: .4rem;
                             background: #e4002b;
                             color:#ffffff;
