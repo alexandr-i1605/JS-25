@@ -32,13 +32,20 @@ export class EditorCardComponent {
                     ⋮
                 </button>
             </div>
+            <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
+                <input type="text" maxlength="100" class="h5" 
+                    id="card-img-${data?data.id:"null"}" placeholder="URL картинки" value="${data?data.src:""}" style="
+                        text-align: center;
+                        width: 100%
+                    ">
+            </div>
             <img class="card-img-top" style="
                 object-fit: contain;
                 height: 100%;
                 object-fit: contain;
                 border-radius: .4rem .4rem 0 0;
                 max-width: 100%;" 
-            src="${data?data.src:"https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd"}" alt="картинка">
+            src="https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd" alt="картинка">
             <div class="card-body">
                 <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
                     <input type="text" maxlength="20" class="h5" 

@@ -65,6 +65,7 @@ export class EditorPage {
     }
 
     saveData(){
+        this.cardData.src=document.getElementById(`card-img-${this.cardData.id}`).value
         this.cardData.title=document.getElementById(`card-title-${this.cardData.id}`).value
         this.cardData.text=document.getElementById(`card-text-${this.cardData.id}`).value
         ajax.patch(stockUrls.getStockById(this.id), (this.cardData), (data) => {
@@ -74,7 +75,7 @@ export class EditorPage {
 
     get getFormData(){
         return{
-            src: "https://s82079.cdn.ngenix.net/330x0/nj2vadvgm15xyvo0skd56rwutiqd",
+            src: document.getElementById(`card-img-null`).value,
             title: document.getElementById(`card-title-null`).value,
             text: document.getElementById(`card-text-null`).value
         }
