@@ -3,6 +3,7 @@ import {BackButtonComponent} from "../../components/back-button/index.js";
 import {ProductPage} from "../product/index.js";
 import {ajax} from "../../modules/ajax.js";
 import {stockUrls} from "../../modules/stockUrls.js";
+import {EditorPage} from "../editor/index.js";
 
 export class MainPage {
 
@@ -29,7 +30,7 @@ export class MainPage {
                         border: none;
                         font-size: 16px;
                         font-weight: 700;">
-                    <i class="bi bi-plus-circle" ></i> Добавить карточку
+                    Добавить карточку
                 </button>
             </div>
             <div id="main-page" class="row row-cols-1 row-cols-md-3 g-4"></div>
@@ -74,18 +75,15 @@ export class MainPage {
     renderData(items) {
         items.forEach((item) => {
             const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item, this.clickCard.bind(this), this.removeCard.bind(this))
+            productCard.render(item, this.clickCard.bind(this), this.removeCard.bind(this), this.editCard.bind(this))
         })
     }
 
-    // addCard() {
-    //     let newCard = {...this.cards[0]}
-    //     newCard.id=this.cards.length+1
-    //     this.cards.push(newCard)
-    //     console.log(this.cards)
-    //     MainPage.cards = this.cards;
-    //     this.renderCards();
-    // }
+    editCard(e) {
+        const cardId = parseInt(e.target.dataset.id);
+        const editorPage = new EditorPage(this.parent, cardId);
+        editorPage.render();
+    }
 
     removeCard(e) {
         const cardId = parseInt(e.target.dataset.id);

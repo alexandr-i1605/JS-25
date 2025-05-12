@@ -1,7 +1,6 @@
-export class ProductCardComponent {
-    constructor(parent, btnsFlag = true) {
+export class EditorCardComponent {
+    constructor(parent) {
         this.parent = parent;
-        this.btnsFlag = btnsFlag ? "flex":"none" //флаг для отображения кнопок на карточке
     }
 
     getHTML(data) {
@@ -25,32 +24,41 @@ export class ProductCardComponent {
                 display: flex;
                 flex-direction: row-reverse ;
             ">
-                <button class="btn btn-floating btn-sm" type="button" id="dropdownMenuButton1"
+                <button class="btn btn-floating btn-sm disabled" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false" style="
-                        font-size: 16px;
-                        font-weight: 900">
-                     ⋮
+                    border: none;
+                    font-size: 16px;
+                    font-weight: 900">
+                    ⋮
                 </button>
-                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1">
-                    <li><button class="dropdown-item" id="edit-card-${data.id}"
-                        data-id="${data.id}" type="button">Редактировать</button></li>
-                </ul>
             </div>
             <img class="card-img-top" style="
                 object-fit: contain;
                 height: 100%;
                 object-fit: contain;
                 border-radius: .4rem .4rem 0 0;
-            width: 100%;" src="${data.src}" alt="картинка">
+                max-width: 100%;" 
+            src="${data.src}" alt="картинка">
             <div class="card-body">
-                 <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
-                    <h5 class="card-title">${data.title}</h5>
-                    <p class="card-text">${data.text}</p>
+                <div style="text-align: center; margin-bottom: 1rem; font-size: 13px; font-weight: 500;">
+                    <input type="text" maxlength="20" class="h5" id="card-title-${data.id}" value="${data.title}" style="
+                        text-align: center;
+                        width: 100%
+
+
+                    "><br> 
+                    <input type="text" maxlength="34" class="p" id="card-text-${data.id}" value="${data.text}" style="
+                        text-align: center;
+                        font-size: 13px;
+                        font-weight: 500;
+                        width: 100%
+
+                    "><br>
                 </div>
                 <div class="mt-auto" style="
-                    display: ${this.btnsFlag};
+                    display: flex;
                     justify-content: space-between;">
-                    <button class="btn btn-danger" 
+                    <button class="btn btn-danger disabled" 
                         id="remove-card-${data.id}"
                         data-id="${data.id}"
                         style="border-radius: .4rem;
@@ -61,7 +69,7 @@ export class ProductCardComponent {
                             font-weight: 700;">
                         <i class="bi bi-trash"></i> Удалить
                     </button>
-                    <button class="btn btn-primary" 
+                    <button class="btn btn-primary disabled" 
                         id="click-card-${data.id}" 
                         data-id="${data.id}"
                         style="border-radius: .4rem;
@@ -78,24 +86,9 @@ export class ProductCardComponent {
     `
         )
     }
-
-    addListeners(data, clickListener, removeListener, editListener) {
-        document
-            .getElementById(`click-card-${data.id}`)
-            .addEventListener("click", clickListener);
-            
-        document
-            .getElementById(`remove-card-${data.id}`)
-            .addEventListener("click", removeListener);
-
-        document
-            .getElementById(`edit-card-${data.id}`)
-            .addEventListener("click", editListener);
-    }
     
-    render(data, clickListener, removeListener, editListener) {
+    render(data) {
         this.parent.insertAdjacentHTML('beforeend', this.getHTML(data));
-        this.addListeners(data, clickListener, removeListener, editListener);
     }
     
 }

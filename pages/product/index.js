@@ -35,8 +35,6 @@ export class ProductPage {
         return `
         <header class="d-flex justify-content-between align-items-center bg-light rounded">
             <div id="backButton" </div>
-            <h2 class="mb-0"></h2>
-            <div></div>
         </header>
         <div id="product-page" class="d-flex justify-content-center"></div>
     `;
