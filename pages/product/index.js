@@ -1,4 +1,3 @@
-import { ajax } from "../../modules/ajax.js";
 import { stockUrls } from "../../modules/stockUrls.js";
 import { MainPage } from "../main/index.js";
 import {ProductCardComponent} from "../../components/product-card/index.js";
@@ -12,10 +11,15 @@ export class ProductPage {
     }
 
     getData() {
-        ajax.get(stockUrls.getStockById(this.id), (data) => {
-            this.cardData = data;
-            this.renderData(this.cardData)
+        fetch(stockUrls.getStockById(this.id))
+            .then((response) => response.json())
+            .then((data) => {
+                this.cardData = data;
+                this.renderData(this.cardData)
         })
+        .catch((err) => {
+            console.error("Ошибка при получени карточки: ", err);
+        });
     }
     
     renderData(item) {

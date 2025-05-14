@@ -1,7 +1,6 @@
 import {ProductCardComponent} from "../../components/product-card/index.js";
 import {BackButtonComponent} from "../../components/back-button/index.js";
 import {ProductPage} from "../product/index.js";
-import {ajax} from "../../modules/ajax.js";
 import {stockUrls} from "../../modules/stockUrls.js";
 import {EditorPage} from "../editor/index.js";
 
@@ -44,9 +43,14 @@ export class MainPage {
     }
 
     getData() {
-        ajax.get(stockUrls.getStocks(), (data) => {
-            this.renderData(data);
+        fetch(stockUrls.getStocks())
+            .then((response) => response.json())
+            .then((data) => {
+                this.renderData(data);
         })
+        .catch((err) => {
+            console.error("Ошибка при получении карточек: ", err);
+        });
     }
 
     renderData(items) {
@@ -69,9 +73,13 @@ export class MainPage {
 
     removeCard(e) {
         const cardId = parseInt(e.target.dataset.id);
-        ajax.delete(stockUrls.getStockById(cardId), (data) => {
-            this.render();
+        fetch(stockUrls.getStockById(cardId),{method: 'DELETE'})
+            .then((data) => {
+                this.render();
         })
+        .catch((err) => {
+            console.error("Ошибка при удалении карточки: ", err);
+        });
     }
 
     clickBack() {

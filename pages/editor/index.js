@@ -1,4 +1,3 @@
-import { ajax } from "../../modules/ajax.js";
 import { stockUrls } from "../../modules/stockUrls.js";
 import { MainPage } from "../main/index.js";
 import {BackButtonComponent} from "../../components/back-button/index.js";
@@ -13,10 +12,15 @@ export class EditorPage {
 
     getData() {
         if(this.id){
-        ajax.get(stockUrls.getStockById(this.id), (data) => {
-            this.cardData = data;
-            this.renderData(this.cardData)
-        })}
+            fetch(stockUrls.getStockById(this.id))
+                .then((response) => response.json())
+                .then((data) => {
+                    this.cardData = data;
+                    this.renderData(this.cardData);
+            })
+            .catch((err) => {
+                console.error("Ошибка при получении карточки: ", err);
+            })}
         else{
             this.renderData(this.cardData)
         }
@@ -68,9 +72,18 @@ export class EditorPage {
         this.cardData.src=document.getElementById(`card-img-${this.cardData.id}`).value
         this.cardData.title=document.getElementById(`card-title-${this.cardData.id}`).value
         this.cardData.text=document.getElementById(`card-text-${this.cardData.id}`).value
-        ajax.patch(stockUrls.getStockById(this.id), (this.cardData), (data) => {
-            this.render();
+
+        fetch(stockUrls.getStockById(this.id),
+        {   method: 'PATCH', 
+            headers: {'Content-Type':'application/json'},
+            body:JSON.stringify(this.cardData)
         })
+            .then(() => {
+                this.render();
+            })
+            .catch((err) => {
+                console.error("Ошибка при изменении карточки: ", err);
+            });
     }
 
     get getFormData(){
@@ -82,10 +95,17 @@ export class EditorPage {
     }
 
     addData(){
-        ajax.post(stockUrls.createStock(), (this.getFormData), (data) => {
-            this.cardData=data;
-            this.render();
+        fetch(stockUrls.createStock(),
+        {   method: 'POST', 
+            headers: {'Content-Type':'application/json'},
+            body:JSON.stringify(this.getFormData)
         })
+            .then(() => {
+                this.render();
+        })
+        .catch((err) => {
+            console.error("Ошибка при сохранении карточки: ", err);
+        });
     }
 
     render() {
