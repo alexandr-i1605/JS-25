@@ -1,4 +1,5 @@
 import {MainPage} from "./pages/main/index.js";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const root = document.getElementById('root');
 
